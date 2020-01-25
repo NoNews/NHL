@@ -1,37 +1,30 @@
 package com.example.nhlstats.features.teams.presentation.mvi.teamDetail
 
-import androidx.ui.core.Text
-import androidx.ui.layout.FlexColumn
-import androidx.ui.material.TopAppBar
+import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
+import com.example.nhlstats.R
 import com.example.nhlstats.common.presentation.BaseFragment
-import org.koin.android.ext.android.getKoin
-import org.koin.core.Koin
 
-class TeamDetailFragment : BaseFragment<TeamDetailViewModel>(TeamDetailViewModel::class) {
+class TeamDetailFragment : BaseFragment<TeamDetailViewModel>(
+    viewModelClass = TeamDetailViewModel::class,
+    layoutRes = R.layout.teams_fragment
+) {
 
-    override fun drawComposeView() {
-        val state = viewModel.state
-        TeamDetailScreen(state = state)
-    }
 
-    private fun TeamDetailScreen(state: TeamDetailState) {
-        FlexColumn {
-            inflexible {
-                TopAppBar(title = { Text("TeamDetail") })
-            }
-//            if (state.progress) {
-//                Center {
-//                    CircularProgressIndicator()
-//                }
-//            } else {
-            flexible(flex = 1f) {
-//                createTeams(
-//                    list = requireNotNull(
-//                        state.data
-//                    )
-//                )
-            }
-//            }
+    companion object {
+        fun newInstance(): Fragment {
+            val args = Bundle()
+            val fragment = TeamDetailFragment()
+            fragment.arguments = args
+            return fragment
         }
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+
 }

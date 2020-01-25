@@ -14,6 +14,7 @@ import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import ru.terrakok.cicerone.Cicerone
 
 class NhlApplication : Application() {
 
@@ -25,23 +26,42 @@ class NhlApplication : Application() {
     private fun setupKoin() {
         val appModule = createAppModule()
         val networkModule = createNetworkModule()
+        val navigation = createNavigation()
         val teams = createTeamsModule()
+
+
 
         startKoin {
             modules(
                 listOf(
                     appModule,
                     networkModule,
+                    navigation,
                     teams
+
                 )
             )
         }
     }
 
+    private fun createNavigation(): Module = module {
+        val cicerone = Cicerone.create()
+
+        factory {
+            cicerone.router
+        }
+
+        factory {
+            cicerone.navigatorHolder
+        }
+
+
+    }
+
     private fun createTeamsModule(): Module = module {
         factory { provideTeamService(get()) }
         single<TeamsRepository> { TeamsRepositoryImpl(get()) }
-        viewModel { TeamsViewModel(get()) }
+        viewModel { TeamsViewModel(get(), get()) }
         viewModel { TeamDetailViewModel() }
     }
 

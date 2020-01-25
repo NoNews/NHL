@@ -1,114 +1,46 @@
 package com.example.nhlstats.features.teams.presentation.mvi.list
 
-import androidx.compose.Composable
-import androidx.compose.unaryPlus
-import androidx.ui.core.Text
-import androidx.ui.core.dp
-import androidx.ui.foundation.Clickable
-import androidx.ui.foundation.VerticalScroller
-import androidx.ui.layout.*
-import androidx.ui.material.CircularProgressIndicator
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.TopAppBar
-import androidx.ui.material.withOpacity
-import androidx.ui.tooling.preview.Preview
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import androidx.lifecycle.Observer
+import com.example.core_ui.list.setupWithAdapter
 import com.example.nhlstats.R
-import com.example.nhlstats.VectorImage
 import com.example.nhlstats.common.presentation.BaseFragment
-import com.example.nhlstats.features.teams.data.ShortTeam
-import com.example.nhlstats.features.teams.presentation.mvi.teamDetail.TeamDetailFragment
+import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TeamDiffCallback
+import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TeamsListAdapter
+import kotlinx.android.synthetic.main.teams_fragment.*
 
-class TeamsFragment : BaseFragment<TeamsViewModel>(TeamsViewModel::class) {
+class TeamsFragment : BaseFragment<TeamsViewModel>(TeamsViewModel::class, R.layout.teams_fragment) {
 
-    override fun drawComposeView() {
-        TeamsScreen(state = viewModel.state)
+
+    private lateinit var teamListAdapter: TeamsListAdapter
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupUi()
+        setupUx()
+        observeState()
     }
 
-
-    @Composable
-    private fun TeamsScreen(state: TeamsState) {
-
-        if (state.isDefault()) {
-            return
-        }
-
-        FlexColumn {
-            inflexible {
-                TopAppBar(
-                    title = { Text("Teams") },
-                    navigationIcon = { R.drawable.ic_launcher_background })
-            }
-            if (state.progress) {
-                Center {
-                    CircularProgressIndicator()
+    private fun observeState() {
+        viewModel.observeState()
+            .observe(this, Observer { teamState ->
+                if (teamState.content.isNotEmpty()) {
+                    teamListAdapter.submitList(teamState.content)
                 }
-            } else {
-                flexible(flex = 1f) {
-                    createTeams(
-                        list = requireNotNull(
-                            state.data
-                        )
-                    )
-                }
-            }
-        }
+            })
     }
 
-
-    @Composable
-    fun createTeams(list: List<ShortTeam>) {
-        VerticalScroller {
-            Column {
-                list.forEach { team ->
-                    createTeamRow(team = team)
-                }
-            }
-        }
+    private fun setupUx() {
+        teamListAdapter.onClickTeam { team -> viewModel.onClickTeam(team) }
     }
 
-    @Composable
-    fun createTeamRow(team: ShortTeam) {
-        val typography = +MaterialTheme.typography()
-
-        Clickable(onClick = {
-            navigate(TeamDetailFragment())
-        }) {
-            //            Ripple(bounded = true) {
-            Padding(left = 16.dp, right = 16.dp, top = 8.dp, bottom = 8.dp) {
-                Row(arrangement = Arrangement.SpaceBetween) {
-                    VectorImage(
-                        id = R.drawable.ic_capitals,
-                        modifier = Spacing(right = 16.dp)
-                    )
-                    Column(
-                        modifier = Flexible(1f)
-                            .wraps(Gravity.Center)
-                    ) {
-                        Text(
-                            text = team.name,
-                            style = typography.h6
-                        )
-                        Text(
-                            text = team.fistYearOfPlay,
-                            style = typography.subtitle1
-                                .withOpacity(0.37f)
-                        )
-                    }
-                }
-            }
-//            }
-        }
+    private fun setupUi() {
+        teamListAdapter = TeamsListAdapter(
+            LayoutInflater.from(context),
+            diffCallback = TeamDiffCallback()
+        )
+        rv_teams.setupWithAdapter(teamListAdapter)
     }
 
-    @Preview
-    @Composable
-    fun DefaultPreview() {
-        MaterialTheme {
-            TeamsScreen(
-                state = TeamsState(
-                    progress = true
-                )
-            )
-        }
-    }
 }
