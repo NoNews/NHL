@@ -1,4 +1,4 @@
-package com.example.nhlstats.features.teams.data
+package com.example.nhlstats.features.teams.domain
 
 data class ShortTeam(
     val id: Int,

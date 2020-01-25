@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.nhlstats.features.teams.data.ShortTeam
+import com.example.nhlstats.features.teams.domain.ShortTeam
 
 class TeamsListAdapter(
     private val inflater: LayoutInflater,

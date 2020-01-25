@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nhlstats.R
-import com.example.nhlstats.features.teams.data.ShortTeam
+import com.example.nhlstats.features.teams.domain.ShortTeam
 
 
 class TitleValueHolder private constructor(itemView: View) :
@@ -28,7 +28,7 @@ class TitleValueHolder private constructor(itemView: View) :
     }
 
     fun bind(team: ShortTeam) {
-        tvTitle.text = team.abbreviation
+        tvTitle.text = team.name
         tvSubtitle.text = team.fistYearOfPlay
         ltRoot.setOnClickListener {
             listener?.invoke(team)

@@ -1,10 +1,10 @@
 package com.example.nhlstats.features.teams.data.dto
 
 import com.example.nhlstats.common.data.response.Data
-import com.example.nhlstats.common.data.response.HttpResponseWrapper
 import com.example.nhlstats.common.data.response.toData
-import com.example.nhlstats.features.teams.data.ShortTeam
 import com.example.nhlstats.features.teams.data.network.TeamsService
+import com.example.nhlstats.features.teams.data.response.TeamsResponse
+import com.example.nhlstats.features.teams.domain.ShortTeam
 import com.example.nhlstats.features.teams.domain.TeamsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,27 +12,11 @@ import kotlinx.coroutines.withContext
 
 class TeamsRepositoryImpl(private val teamsService: TeamsService) : TeamsRepository {
 
-
-    private val responseWrapper = HttpResponseWrapper<TeamsResponse>()
-
-//    private val delegate = RequestDelegate<Unit, List<Team>>(
-////        fromNetwork = {
-//////            teamsService.getAllTeamsAsync().await()
-//////            responseWrapper.wrap(teamsService.getAllTeamsAsync())
-//////                .toDomain()
-////
-////
-////        }
-////        fromMemory = { null },
-////        toMemory = { unit: Unit, list: List<Team> -> }
-//    )
-
-    override suspend fun getShortTeams(): Data<List<ShortTeam>> {
+    override suspend fun getTeams(): Data<List<ShortTeam>> {
         return withContext(Dispatchers.IO) {
             val response = teamsService.getAllTeamsAsync()
                 .await()
             if (response.isSuccessful) {
-
                 requireNotNull(response.body())
                     .toDomain()
                     .toData()
@@ -44,21 +28,40 @@ class TeamsRepositoryImpl(private val teamsService: TeamsService) : TeamsReposit
         }
     }
 
+    override suspend fun getTeam(id: Int): Data<ShortTeam> {
+
+        return withContext(Dispatchers.IO) {
+            val response = teamsService.getTeamAsync(id).await()
+
+            if (response.isSuccessful) {
+                requireNotNull(response.body()).toDomain().first().toData()
+            } else {
+                requireNotNull(response.body()).toDomain().first().toData()
+            }
+        }
+
+    }
+
 
 }
 
 
 private fun TeamsResponse.toDomain() = teams.map { dto ->
-    ShortTeam(
-        id = dto.id ?: Integer.MAX_VALUE,
-        name = dto.name ?: "",
-        link = dto.link ?: "",
-        abbreviation = dto.abbreviation ?: "",
-        teamName = dto.teamName ?: "",
-        locationName = dto.locationName ?: "",
-        fistYearOfPlay = dto.firstYearOfPlay ?: ""
+    dto.toDomain()
+}
+
+private fun TeamDto.toDomain(): ShortTeam {
+    return ShortTeam(
+        id = id ?: Integer.MAX_VALUE,
+        name = name ?: "",
+        link = link ?: "",
+        abbreviation = abbreviation ?: "",
+        teamName = teamName ?: "",
+        locationName = locationName ?: "",
+        fistYearOfPlay = firstYearOfPlay ?: ""
     )
 }
+
 
 
 

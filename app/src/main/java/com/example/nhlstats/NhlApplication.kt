@@ -62,7 +62,7 @@ class NhlApplication : Application() {
         factory { provideTeamService(get()) }
         single<TeamsRepository> { TeamsRepositoryImpl(get()) }
         viewModel { TeamsViewModel(get(), get()) }
-        viewModel { TeamDetailViewModel() }
+        viewModel { (teamId: Int) -> TeamDetailViewModel(get(), teamId) }
     }
 
 

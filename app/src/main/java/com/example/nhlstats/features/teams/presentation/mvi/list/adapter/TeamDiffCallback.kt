@@ -1,7 +1,7 @@
 package com.example.nhlstats.features.teams.presentation.mvi.list.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.example.nhlstats.features.teams.data.ShortTeam
+import com.example.nhlstats.features.teams.domain.ShortTeam
 
 class TeamDiffCallback : DiffUtil.ItemCallback<ShortTeam>() {
 
