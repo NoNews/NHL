@@ -1,4 +1,4 @@
-package com.example.core_ui.list
+package com.example.core_ui.list.ui
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter

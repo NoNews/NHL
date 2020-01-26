@@ -3,11 +3,12 @@ package com.example.nhlstats.features.teams.presentation.mvi.list
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import com.example.core_ui.list.setupWithAdapter
+import com.example.core_ui.list.ui.setupWithAdapter
 import com.example.nhlstats.R
 import com.example.nhlstats.common.presentation.BaseFragment
-import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TeamDiffCallback
+import com.example.nhlstats.features.teams.domain.ShortTeam
 import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TeamsListAdapter
+import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TitleValueHolderDiffUtil
 import kotlinx.android.synthetic.main.teams_fragment.*
 
 class TeamsFragment :
@@ -34,13 +35,13 @@ class TeamsFragment :
     }
 
     private fun setupUx() {
-        teamListAdapter.onClickTeam { team -> viewModel.onClickTeam(team) }
+        teamListAdapter.onClickTeam { team -> viewModel.onClickTeam(team?.payload as ShortTeam) }
     }
 
     private fun setupUi() {
         teamListAdapter = TeamsListAdapter(
             LayoutInflater.from(context),
-            diffCallback = TeamDiffCallback()
+            diffCallback = TitleValueHolderDiffUtil()
         )
         rv_teams.setupWithAdapter(teamListAdapter)
     }

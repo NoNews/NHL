@@ -1,7 +1,9 @@
 package com.example.nhlstats.features.teams.presentation.mvi.list
 
 import androidx.lifecycle.viewModelScope
+import com.example.core_ui.list.ui.delegates.TitleValueItem
 import com.example.nhlstats.common.presentation.BaseViewModel
+import com.example.nhlstats.common.ui.toImageRes
 import com.example.nhlstats.features.teams.domain.ShortTeam
 import com.example.nhlstats.features.teams.domain.TeamsRepository
 import com.example.nhlstats.features.teams.presentation.mvi.teamDetail.TeamDetailContract
@@ -25,7 +27,19 @@ class TeamsViewModel(
             val content = data.content
             val error = data.error
             when {
-                content != null -> updateState(TeamsState(content = content))
+                content != null -> {
+
+                    val items =
+                        content.map {
+                            TitleValueItem(
+                                title = it.name,
+                                subtitle = it.id.toString(),
+                                imageRes = it.toImageRes(),
+                                payload = it
+                            )
+                        }
+                    updateState(TeamsState(content = items))
+                }
                 error != null -> updateState(TeamsState(error = error))
             }
         }

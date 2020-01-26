@@ -1,12 +1,12 @@
-package com.example.nhlstats.features.teams.presentation.mvi.list.adapter
+package com.example.core_ui.list.ui.delegates
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nhlstats.R
-import com.example.nhlstats.features.teams.domain.ShortTeam
+import com.example.core_ui.R
 
 
 class TitleValueHolder private constructor(itemView: View) :
@@ -14,24 +14,26 @@ class TitleValueHolder private constructor(itemView: View) :
     private var tvTitle: TextView = itemView.findViewById(R.id.tv_team_title)
     private var tvSubtitle: TextView = itemView.findViewById(R.id.tv_team_subtitle)
     private var ltRoot: ViewGroup = itemView.findViewById(R.id.lt_team_root)
-
-    private var listener: ((ShortTeam) -> Unit)? = null
-
+    private var image: ImageView = itemView.findViewById(R.id.iv_image)
+    private var listener: ((TitleValueItem) -> Unit)? = null
 
     constructor(
         inflater: LayoutInflater,
         parent: ViewGroup,
-        listener: ((ShortTeam) -> Unit)?
+        listener: ((TitleValueItem) -> Unit)?
     ) : this(inflater.inflate(R.layout.item_title_value, parent, false)) {
         this.listener = listener
-
     }
 
-    fun bind(team: ShortTeam) {
-        tvTitle.text = team.name
-        tvSubtitle.text = team.fistYearOfPlay
+    fun bind(item: TitleValueItem) {
+        tvTitle.text = item.title
+        tvSubtitle.text = item.subtitle
+        image.setImageResource(item.imageRes)
+
+
+
         ltRoot.setOnClickListener {
-            listener?.invoke(team)
+            listener?.invoke(item)
         }
     }
 

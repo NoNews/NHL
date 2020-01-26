@@ -11,4 +11,12 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary" />
 
+
+    <TextView
+        android:id="@+id/tv_players"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Players" />
+
 </LinearLayout>

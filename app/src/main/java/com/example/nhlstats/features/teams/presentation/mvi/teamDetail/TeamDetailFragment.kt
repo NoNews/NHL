@@ -1,6 +1,7 @@
 package com.example.nhlstats.features.teams.presentation.mvi.teamDetail
 
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.nhlstats.R
 import com.example.nhlstats.common.presentation.BaseFragment
@@ -28,6 +29,15 @@ class TeamDetailFragment : BaseFragment<TeamDetailState, TeamDetailViewModel>(
     override fun getParameters(): ParametersDefinition? = {
         val teamId = arguments?.getInt(TeamDetailContract.TEAM_ID_KEY, 0)
         parametersOf(teamId)
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        tv_players.setOnClickListener {
+            viewModel.onClickPlayers()
+        }
     }
 
     override fun stateUpdated(state: TeamDetailState) {
