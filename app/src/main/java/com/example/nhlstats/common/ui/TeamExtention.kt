@@ -18,7 +18,11 @@ val images = mapOf(
     13 to R.drawable.ic_panters,
     9 to R.drawable.ic_senators,
     8 to R.drawable.ic_canadiens,
-    16 to R.drawable.ic_hawks
+    16 to R.drawable.ic_hawks,
+    5 to R.drawable.ic_penguins,
+    14 to R.drawable.ic_tampa,
+    12 to R.drawable.ic_carolina,
+    7 to R.drawable.ic_buffalo
 )
 
 fun ShortTeam.toImageRes() = images[id] ?: R.drawable.ic_capitals
