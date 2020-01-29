@@ -3,14 +3,21 @@ package com.example.nhlstats.common.ui
 import com.example.nhlstats.R
 import com.example.nhlstats.features.teams.domain.ShortTeam
 
+private const val TEAM_RED_WINGS_ID = 17
+private const val TEAM_CAPITALS_ID = 15
+private const val TEAM_LEAFS_ID = 10
+private const val TEAM_CALGARY_ID = 20
+private const val TEAM_DEVILS_ID = 1
+private const val TEAM_ISLANDERS_ID = 2
+private const val TEAM_RANGERS_ID = 3
 
 val images = mapOf(
-    15 to R.drawable.ic_capitals,
-    17 to R.drawable.ic_red_wings,
-    10 to R.drawable.ic_toronto,
-    1 to R.drawable.ic_devils,
-    2 to R.drawable.ic_islanders,
-    3 to R.drawable.ic_rangers,
+    TEAM_CAPITALS_ID to R.drawable.ic_capitals,
+    TEAM_RED_WINGS_ID to R.drawable.ic_red_wings,
+    TEAM_LEAFS_ID to R.drawable.ic_toronto,
+    TEAM_DEVILS_ID to R.drawable.ic_devils,
+    TEAM_ISLANDERS_ID to R.drawable.ic_islanders,
+    TEAM_RANGERS_ID to R.drawable.ic_rangers,
     4 to R.drawable.ic_flyers,
     19 to R.drawable.ic_blues,
     18 to R.drawable.ic_predators,
@@ -27,7 +34,7 @@ val images = mapOf(
     29 to R.drawable.ic_columbus,
     26 to R.drawable.ic_kings,
     53 to R.drawable.ic_arizona,
-    20 to R.drawable.ic_calgary,
+    TEAM_CALGARY_ID to R.drawable.ic_calgary,
     28 to R.drawable.ic_sharks,
     22 to R.drawable.ic_edmonton,
     25 to R.drawable.ic_stars,
