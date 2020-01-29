@@ -1,4 +1,4 @@
-package com.example.nhlstats.features.teams.presentation.mvi.teamDetail
+package com.example.nhlstats.features.teams.presentation.mvi.team_detail
 
 import androidx.lifecycle.viewModelScope
 import com.example.nhlstats.common.presentation.BaseViewModel

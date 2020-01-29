@@ -1,4 +1,4 @@
-package com.example.nhlstats.features.teams.presentation.mvi.teamDetail
+package com.example.nhlstats.features.teams.presentation.mvi.team_detail
 
 import android.os.Bundle
 import android.view.View

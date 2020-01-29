@@ -6,7 +6,7 @@ import com.example.nhlstats.common.presentation.BaseViewModel
 import com.example.nhlstats.common.ui.toImageRes
 import com.example.nhlstats.features.teams.domain.ShortTeam
 import com.example.nhlstats.features.teams.domain.TeamsRepository
-import com.example.nhlstats.features.teams.presentation.mvi.teamDetail.TeamDetailContract
+import com.example.nhlstats.features.teams.presentation.mvi.team_detail.TeamDetailContract
 import kotlinx.coroutines.launch
 import ru.terrakok.cicerone.Router
 
@@ -33,7 +33,7 @@ class TeamsViewModel(
                         content.map {
                             TitleValueItem(
                                 title = it.name,
-                                subtitle = it.id.toString(),
+                                subtitle = it.fistYearOfPlay,
                                 imageRes = it.toImageRes(),
                                 payload = it
                             )

@@ -6,7 +6,7 @@ import com.example.nhlstats.features.teams.data.dto.TeamsRepositoryImpl
 import com.example.nhlstats.features.teams.data.network.TeamsService
 import com.example.nhlstats.features.teams.domain.TeamsRepository
 import com.example.nhlstats.features.teams.presentation.mvi.list.TeamsViewModel
-import com.example.nhlstats.features.teams.presentation.mvi.teamDetail.TeamDetailViewModel
+import com.example.nhlstats.features.teams.presentation.mvi.team_detail.TeamDetailViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
