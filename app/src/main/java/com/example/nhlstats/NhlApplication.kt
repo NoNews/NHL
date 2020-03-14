@@ -68,7 +68,7 @@ class NhlApplication : Application() {
         }
         viewModel { TeamsViewModel(get(), get()) }
         viewModel { (teamId: Int) -> TeamDetailViewModel(get(), teamId, get()) }
-        viewModel { (teamId: Int) -> TeamPlayersViewModel(teamId) }
+        viewModel { (teamId: Int) -> TeamPlayersViewModel(teamId, get()) }
     }
 
 

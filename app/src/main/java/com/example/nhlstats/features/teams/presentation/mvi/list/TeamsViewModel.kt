@@ -8,8 +8,6 @@ import com.example.nhlstats.features.teams.domain.ShortTeam
 import com.example.nhlstats.features.teams.domain.TeamsRepository
 import com.example.nhlstats.features.teams.presentation.mvi.team_detail.TeamDetailContract
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.subscribeOn
 import kotlinx.coroutines.launch
 import ru.terrakok.cicerone.Router
 
@@ -50,30 +48,6 @@ class TeamsViewModel(
                     }
                 }
         }
-
-
-//        viewModelScope.launch {
-//            updateState(TeamsState(progress = true))
-//            val data = repository.getTeams()
-//            val content = data.content
-//            val error = data.error
-//            when {
-//                content != null -> {
-//
-//                    val items =
-//                        content.map {
-//                            TitleValueItem(
-//                                title = it.name,
-//                                subtitle = it.fistYearOfPlay,
-//                                imageRes = it.toImageRes(),
-//                                payload = it
-//                            )
-//                        }
-//                    updateState(TeamsState(content = items))
-//                }
-//                error != null -> updateState(TeamsState(error = error))
-//            }
-//        }
     }
 
     fun onClickTeam(team: ShortTeam) {

@@ -7,7 +7,7 @@ import com.example.core_ui.list.ui.setupWithAdapter
 import com.example.nhlstats.R
 import com.example.nhlstats.common.presentation.BaseFragment
 import com.example.nhlstats.features.teams.domain.ShortTeam
-import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TeamsListAdapter
+import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TitleValueHolderAdapter
 import com.example.nhlstats.features.teams.presentation.mvi.list.adapter.TitleValueHolderDiffUtil
 import kotlinx.android.synthetic.main.teams_fragment.*
 
@@ -15,7 +15,7 @@ class TeamsFragment :
     BaseFragment<TeamsState, TeamsViewModel>(TeamsViewModel::class, R.layout.teams_fragment) {
 
 
-    private lateinit var teamListAdapter: TeamsListAdapter
+    private lateinit var teamListAdapter: TitleValueHolderAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
@@ -25,10 +25,10 @@ class TeamsFragment :
     override fun stateUpdated(state: TeamsState) {
         when {
             state.progress -> {
-                progress_bar.visibility = View.VISIBLE
+                showFullScreenProgress(true)
             }
             state.content != null -> {
-                progress_bar.visibility = View.GONE
+                showFullScreenProgress(false)
                 teamListAdapter.submitList(state.content)
             }
         }
@@ -39,7 +39,7 @@ class TeamsFragment :
     }
 
     private fun setupUi() {
-        teamListAdapter = TeamsListAdapter(
+        teamListAdapter = TitleValueHolderAdapter(
             LayoutInflater.from(context),
             diffCallback = TitleValueHolderDiffUtil()
         )

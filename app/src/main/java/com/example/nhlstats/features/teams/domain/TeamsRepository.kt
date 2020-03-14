@@ -11,5 +11,5 @@ interface TeamsRepository {
     suspend fun getTeam(id: Int): Data<ShortTeam>
 
 
-    suspend fun getPlayers(id: Int): Deferred<Data<List<ShortPlayer>>>
+    suspend fun getPlayers(id: Int): Flow<Data<ShortTeamPlayers>>
 }

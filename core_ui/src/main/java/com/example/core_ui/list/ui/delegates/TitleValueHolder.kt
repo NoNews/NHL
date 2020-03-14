@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
+import coil.transform.CircleCropTransformation
 import com.example.core_ui.R
 
 
@@ -27,13 +29,27 @@ class TitleValueHolder private constructor(itemView: View) :
 
     fun bind(item: TitleValueItem) {
         tvTitle.text = item.title
-        tvSubtitle.text = item.subtitle
-        image.setImageResource(item.imageRes)
 
+        if (item.subtitle.isEmpty()) {
+            tvSubtitle.visibility = View.GONE
+        } else {
+            tvSubtitle.text = item.subtitle
+            tvSubtitle.visibility = View.VISIBLE
+        }
 
-
+        when {
+            item.imageUrl != null -> loadImageFromNetwork(item)
+            item.imageRes != 0 -> image.setImageResource(item.imageRes)
+        }
         ltRoot.setOnClickListener {
             listener?.invoke(item)
+        }
+    }
+
+    private fun loadImageFromNetwork(item: TitleValueItem) {
+        image.load(uri = item.imageUrl) {
+            crossfade(true)
+            transformations(CircleCropTransformation())
         }
     }
 

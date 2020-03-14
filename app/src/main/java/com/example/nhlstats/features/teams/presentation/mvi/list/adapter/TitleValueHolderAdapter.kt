@@ -8,7 +8,7 @@ import com.example.core_ui.list.ui.delegates.TitleValueHolder
 import com.example.core_ui.list.ui.delegates.TitleValueItem
 import com.example.nhlstats.features.teams.domain.ShortTeam
 
-class TeamsListAdapter(
+class TitleValueHolderAdapter(
     private val inflater: LayoutInflater,
     diffCallback: DiffUtil.ItemCallback<TitleValueItem>
 ) : ListAdapter<TitleValueItem, TitleValueHolder>(diffCallback) {

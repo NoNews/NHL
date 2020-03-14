@@ -10,12 +10,12 @@ import retrofit2.http.Path
 interface TeamsService {
 
     @GET("/api/v1/teams")
-    suspend fun getAllTeamsAsync(): TeamsResponse
+    suspend fun getAllTeams(): TeamsResponse
 
     @GET("/api/v1/teams/{id}")
     suspend fun getTeamAsync(@Path("id") id: Int): Response<TeamsResponse>
 
-    @GET("api/v1/teams/{id}?expand=team.roster")
-    fun getShortPlayersAsync(@Path("id") id: Int): Response<TeamPlayersResponse>
+    @GET("teams/{id}?expand=team.roster")
+    suspend fun getShortPlayers(@Path("id") id: Int): TeamPlayersResponse
 
 }

@@ -1,6 +1,7 @@
 package com.example.nhlstats.common.ui
 
 import com.example.nhlstats.R
+import com.example.nhlstats.features.teams.domain.ShortPlayer
 import com.example.nhlstats.features.teams.domain.ShortTeam
 
 private const val TEAM_RED_WINGS_ID = 17
@@ -46,3 +47,5 @@ val images = mapOf(
 )
 
 fun ShortTeam.toImageRes() = images[id] ?: R.drawable.ic_capitals
+
+fun ShortPlayer.imageUrl() = "https://nhl.bamcontent.com/images/headshots/current/168x168/${id}.jpg"

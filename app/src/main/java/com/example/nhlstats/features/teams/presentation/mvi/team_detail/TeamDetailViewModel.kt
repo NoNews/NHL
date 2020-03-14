@@ -19,7 +19,6 @@ class TeamDetailViewModel(
     BaseViewModel<TeamDetailState>() {
 
     override fun onCreated() {
-
         viewModelScope.launch {
             repository.getTeams()
                 .filter { it.content != null }
