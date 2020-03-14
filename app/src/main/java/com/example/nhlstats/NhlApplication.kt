@@ -2,11 +2,12 @@ package com.example.nhlstats
 
 import android.app.Application
 import com.example.nhlstats.common.data.NetworkClient
-import com.example.nhlstats.features.teams.data.dto.TeamsRepositoryImpl
+import com.example.nhlstats.features.teams.data.TeamsRepositoryImpl
 import com.example.nhlstats.features.teams.data.network.TeamsService
 import com.example.nhlstats.features.teams.domain.TeamsRepository
 import com.example.nhlstats.features.teams.presentation.mvi.list.TeamsViewModel
 import com.example.nhlstats.features.teams.presentation.mvi.team_detail.TeamDetailViewModel
+import com.example.nhlstats.features.teams.presentation.mvi.team_detail_players.TeamPlayersViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -60,9 +61,14 @@ class NhlApplication : Application() {
 
     private fun createTeamsModule(): Module = module {
         factory { provideTeamService(get()) }
-        single<TeamsRepository> { TeamsRepositoryImpl(get()) }
+        single<TeamsRepository> {
+            TeamsRepositoryImpl(
+                get()
+            )
+        }
         viewModel { TeamsViewModel(get(), get()) }
-        viewModel { (teamId: Int) -> TeamDetailViewModel(get(), teamId) }
+        viewModel { (teamId: Int) -> TeamDetailViewModel(get(), teamId, get()) }
+        viewModel { (teamId: Int) -> TeamPlayersViewModel(teamId) }
     }
 
 

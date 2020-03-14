@@ -12,7 +12,6 @@ class NetworkClient(private val okHttp: OkHttpClient) {
             .baseUrl("https://statsapi.web.nhl.com/api/v1/")
             .client(okHttp)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
     }
 
