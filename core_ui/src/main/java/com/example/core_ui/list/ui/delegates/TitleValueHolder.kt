@@ -23,7 +23,7 @@ class TitleValueHolder private constructor(itemView: View) :
         inflater: LayoutInflater,
         parent: ViewGroup,
         listener: ((TitleValueItem) -> Unit)?
-    ) : this(inflater.inflate(R.layout.item_title_value, parent, false)) {
+    ) : this(inflater.inflate(R.layout.delegate_image_title_subtitle, parent, false)) {
         this.listener = listener
     }
 

@@ -31,5 +31,6 @@ class TitleValueHolderAdapter(
     fun onClickTeam(function: (TitleValueItem) -> Unit) {
         this.teamClickListener = function
     }
+
 }
 

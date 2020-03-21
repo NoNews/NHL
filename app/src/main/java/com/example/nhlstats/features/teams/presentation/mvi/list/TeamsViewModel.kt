@@ -1,7 +1,9 @@
 package com.example.nhlstats.features.teams.presentation.mvi.list
 
 import androidx.lifecycle.viewModelScope
-import com.example.core_ui.list.ui.delegates.TitleValueItem
+import com.example.core_ui.list.ui.delegates.ImageTitleSubtitleDelegate
+import com.example.core_ui.list.ui.images.Image
+import com.example.nhlstats.common.data.response.Data
 import com.example.nhlstats.common.presentation.BaseViewModel
 import com.example.nhlstats.common.ui.toImageRes
 import com.example.nhlstats.features.teams.domain.ShortTeam
@@ -22,36 +24,39 @@ class TeamsViewModel(
     }
 
     private fun getTeams() {
-
         viewModelScope.launch {
             repository
                 .getTeams()
-                .collect { data ->
-                    val content = data.content
-                    val loading = data.loading
-                    val error = data.error
-
-                    when {
-                        content != null -> {
-                            val items = content.map {
-                                TitleValueItem(
-                                    title = it.name,
-                                    subtitle = it.fistYearOfPlay,
-                                    imageRes = it.toImageRes(),
-                                    payload = it
-                                )
-                            }
-                            updateState(TeamsState(content = items))
-                        }
-                        loading -> updateState(TeamsState(progress = true))
-                        error != null -> updateState(TeamsState(error = error))
-                    }
-                }
+                .collect { data -> resolveState(data) }
         }
     }
 
-    fun onClickTeam(team: ShortTeam) {
-        val screen = TeamDetailContract.createScreen(teamId = team.id)
+    private fun resolveState(data: Data<List<ShortTeam>>) {
+        val content = data.content
+        val loading = data.loading
+        val error = data.error
+
+        when {
+            content != null -> {
+                val items = content.map { team ->
+                    ImageTitleSubtitleDelegate.Item(
+                        id = team.id.toString(),
+                        title = team.name,
+                        subtitle = team.fistYearOfPlay,
+                        image = Image.Resource(team.toImageRes()),
+                        payload = team.id
+                    )
+                }
+                updateState(TeamsState(content = items))
+            }
+            loading -> updateState(TeamsState(progress = true))
+            error != null -> updateState(TeamsState(error = error))
+        }
+    }
+
+    fun onClickTeam(team: ImageTitleSubtitleDelegate.Item) {
+        val id = (team.payload as Int)
+        val screen = TeamDetailContract.createScreen(teamId = id)
         router.navigateTo(screen)
     }
 
