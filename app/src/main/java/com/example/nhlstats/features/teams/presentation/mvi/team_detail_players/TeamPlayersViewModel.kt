@@ -1,7 +1,8 @@
 package com.example.nhlstats.features.teams.presentation.mvi.team_detail_players
 
 import androidx.lifecycle.viewModelScope
-import com.example.core_ui.list.ui.delegates.TitleValueItem
+import com.example.core_ui.list.ui.delegates.ImageTitleSubtitleDelegate
+import com.example.core_ui.list.ui.images.Image
 import com.example.nhlstats.common.data.response.*
 import com.example.nhlstats.common.presentation.BaseViewModel
 import com.example.nhlstats.common.ui.imageUrl
@@ -35,9 +36,10 @@ class TeamPlayersViewModel constructor(
                 TeamPlayersState.Content(
                     title = teamName,
                     content = players.map { shortPlayer ->
-                        TitleValueItem(
+                        ImageTitleSubtitleDelegate.Item(
+                            id = shortPlayer.id.toString(),
                             title = shortPlayer.fullName + " #" + shortPlayer.jerseyNumber,
-                            imageUrl = shortPlayer.imageUrl()
+                            image = Image.Network(url = shortPlayer.imageUrl())
                         )
                     }
                 )
