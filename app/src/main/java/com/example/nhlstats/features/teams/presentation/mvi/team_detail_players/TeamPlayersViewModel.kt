@@ -38,7 +38,8 @@ class TeamPlayersViewModel constructor(
                     content = players.map { shortPlayer ->
                         ImageTitleSubtitleDelegate.Item(
                             id = shortPlayer.id.toString(),
-                            title = shortPlayer.fullName + " #" + shortPlayer.jerseyNumber,
+                            title = shortPlayer.fullName,
+                            subtitle = " #" + shortPlayer.jerseyNumber,
                             image = Image.Network(url = shortPlayer.imageUrl())
                         )
                     }
