@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.nhlstats.features.teams.presentation.mvi.list.TeamsFragment
+import com.example.nhlstats.common.presentation.BaseFragment
+import com.example.nhlstats.features.mainscreen.ui.MainFragment
 import org.koin.android.ext.android.inject
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 
 class MainActivity : AppCompatActivity(), Navigator {
+
+
+    private val currentFragment: BaseFragment?
+        get() = supportFragmentManager.findFragmentById(android.R.id.content) as? BaseFragment
 
 
     private val navigatorHolder: NavigatorHolder by inject()
@@ -20,7 +25,10 @@ class MainActivity : AppCompatActivity(), Navigator {
         super.onCreate(savedInstanceState)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, TeamsFragment())
+                .replace(
+                    android.R.id.content,
+                    MainFragment()
+                )
                 .commit()
         }
     }
@@ -41,6 +49,10 @@ class MainActivity : AppCompatActivity(), Navigator {
     override fun onPause() {
         navigatorHolder.removeNavigator()
         super.onPause()
+    }
+
+    override fun onBackPressed() {
+        currentFragment?.onBackPressed() ?: super.onBackPressed()
     }
 }
 

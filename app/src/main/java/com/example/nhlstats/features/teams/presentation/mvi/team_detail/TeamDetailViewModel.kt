@@ -37,4 +37,8 @@ class TeamDetailViewModel(
         val screen = TeamPlayersContract.createScreen(teamId)
         router.navigateTo(screen)
     }
+
+    fun onBackPressed() {
+        router.exit()
+    }
 }

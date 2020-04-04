@@ -60,4 +60,8 @@ class TeamsViewModel(
         router.navigateTo(screen)
     }
 
+    fun onBackPressed() {
+        router.exit()
+    }
+
 }

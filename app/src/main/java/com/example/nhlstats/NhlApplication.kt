@@ -39,7 +39,6 @@ class NhlApplication : Application() {
                     networkModule,
                     navigation,
                     teams
-
                 )
             )
         }
@@ -47,6 +46,9 @@ class NhlApplication : Application() {
 
     private fun createNavigation(): Module = module {
         val cicerone = Cicerone.create()
+
+        Cicerone.create()
+
 
         factory {
             cicerone.router
@@ -66,8 +68,7 @@ class NhlApplication : Application() {
                 get()
             )
         }
-        viewModel { TeamsViewModel(get(), get()) }
-        viewModel { (teamId: Int) -> TeamDetailViewModel(get(), teamId, get()) }
+//        viewModel { (teamId: Int) -> TeamDetailViewModel(get(), teamId, get()) }
         viewModel { (teamId: Int) -> TeamPlayersViewModel(teamId, get()) }
     }
 
