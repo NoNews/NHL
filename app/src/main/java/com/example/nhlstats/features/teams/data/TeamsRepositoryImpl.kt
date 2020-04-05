@@ -8,10 +8,7 @@ import com.example.nhlstats.features.teams.data.dto.TeamDto
 import com.example.nhlstats.features.teams.data.network.TeamsService
 import com.example.nhlstats.features.teams.data.response.TeamPlayersResponse
 import com.example.nhlstats.features.teams.data.response.TeamsResponse
-import com.example.nhlstats.features.teams.domain.ShortPlayer
-import com.example.nhlstats.features.teams.domain.ShortTeam
-import com.example.nhlstats.features.teams.domain.ShortTeamPlayers
-import com.example.nhlstats.features.teams.domain.TeamsRepository
+import com.example.nhlstats.features.teams.domain.*
 import kotlinx.coroutines.flow.Flow
 
 
@@ -70,7 +67,21 @@ private fun TeamPlayersResponse.toDomain(): ShortTeamPlayers {
                     id = dto.personDto.id,
                     fullName = dto.personDto.fullName,
                     jerseyNumber = dto.jerseyNumber ?: "",
-                    link = dto.personDto.link
+                    link = dto.personDto.link,
+                    positionInfo = when (dto.position.type) {
+                        "Forward" -> PositionInfo.Forward(
+                            type = PositionType.FORWARD,
+                            forwardType = when (dto.position.code) {
+                                "C" -> ForwardType.CENTER
+                                "L" -> ForwardType.LEFT_WING
+                                "R" -> ForwardType.RIGHT_WING
+                                else -> error("")
+                            }
+                        )
+                        "Defenseman" -> PositionInfo.Defenceman(PositionType.DEFENSEMAN)
+                        "Goalie" -> PositionInfo.Goalie(PositionType.GOALIE)
+                        else -> error("")
+                    }
                 )
             }
 

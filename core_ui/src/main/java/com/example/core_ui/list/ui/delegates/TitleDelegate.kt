@@ -1,5 +1,6 @@
 package com.example.core_ui.list.ui.delegates
 
+import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import com.example.core_ui.R
@@ -27,15 +28,15 @@ class TitleDelegate() : BaseItemDelegate<TitleDelegate.Item, TitleDelegate.ViewH
 
         fun bind(item: Item) {
             title.text = item.title
-
-
+            title.gravity = item.gravity
         }
 
     }
 
     data class Item(
-        override val id: String="",
-        val title: String
+        override val id: String = "",
+        val title: String,
+        var gravity: Int = Gravity.START
     ) : ListItem
 
 

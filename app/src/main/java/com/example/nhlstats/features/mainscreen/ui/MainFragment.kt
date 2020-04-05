@@ -1,6 +1,5 @@
 package com.example.nhlstats.features.mainscreen.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -24,16 +23,12 @@ class MainFragment : BaseFragment(R.layout.main_fragment),
         get() = childFragmentManager.fragments.firstOrNull { it.isVisible } as? BaseFragment
 
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottom_bar.setOnNavigationItemSelectedListener(this)
 
         adapter = MainViewPagerAdapter(this)
-
-        view_pager.setOnTouchListener { _, _ ->
-            true
-        }
+        
         view_pager.adapter = adapter
         view_pager.isUserInputEnabled = false
     }
@@ -42,7 +37,7 @@ class MainFragment : BaseFragment(R.layout.main_fragment),
         when (item.itemId) {
 
             R.id.menu_standings -> {
-                view_pager.setCurrentItem(0,false)
+                view_pager.setCurrentItem(0, false)
             }
 
             R.id.menu_teams -> {

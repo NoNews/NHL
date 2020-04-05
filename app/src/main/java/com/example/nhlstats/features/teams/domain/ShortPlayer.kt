@@ -4,5 +4,6 @@ data class ShortPlayer(
     val id: Int,
     val fullName: String,
     val link: String,
-    val jerseyNumber: String?
+    val jerseyNumber: String?,
+    val positionInfo: PositionInfo
 )
