@@ -8,15 +8,26 @@ import com.example.nhlstats.common.presentation.BaseFragment
 import com.example.nhlstats.features.mainscreen.MainViewPagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.main_fragment.*
+import org.koin.android.ext.android.inject
+import ru.terrakok.cicerone.Router
 
 class MainFragment : BaseFragment(R.layout.main_fragment),
-    BottomNavigationView.OnNavigationItemSelectedListener, BackPressable {
+    BottomNavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var adapter: MainViewPagerAdapter
 
-    private val currentTabFragment: BaseFragment?
-        get() = childFragmentManager.fragments[view_pager.currentItem] as BaseFragment
+    private val router: Router by inject()
+//    private val currentTabFragment: BaseFragment?
+//        get() = childFragmentManager.fragments[view_pager.currentItem] as BaseFragment
 
+    private val currentTabFragment: BaseFragment?
+        get() = childFragmentManager.fragments.firstOrNull { it.isVisible } as? BaseFragment
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +56,7 @@ class MainFragment : BaseFragment(R.layout.main_fragment),
 
 
     override fun onBackPressed() {
-        currentTabFragment?.onBackPressed()
+        currentTabFragment?.onBackPressed() ?: super.onBackPressed()
     }
 
 }

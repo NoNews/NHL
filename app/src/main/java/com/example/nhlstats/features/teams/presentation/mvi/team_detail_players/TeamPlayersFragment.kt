@@ -63,4 +63,8 @@ class TeamPlayersFragment :
             is TeamPlayersState.Loading -> showFullScreenProgress(true)
         }
     }
+
+    override fun onBackPressed() {
+        viewModel.onBackPressed()
+    }
 }

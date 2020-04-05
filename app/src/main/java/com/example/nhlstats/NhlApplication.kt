@@ -14,6 +14,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import ru.terrakok.cicerone.Cicerone
 
@@ -30,26 +31,43 @@ class NhlApplication : Application() {
         val navigation = createNavigation()
         val teams = createTeamsModule()
 
-
-
         startKoin {
             modules(
                 listOf(
                     appModule,
                     networkModule,
                     navigation,
-                    teams
+                    teams,
+                    declareTeamFeatureModule()
                 )
             )
         }
     }
 
+    private fun declareTeamFeatureModule(): Module {
+        return module {
+            viewModel { (teamId: Int) ->
+                TeamDetailViewModel(
+                    get(), teamId, get(
+                        named(FlowKey.TEAMS)
+                    )
+                )
+            }
+            viewModel { (teamId: Int) ->
+                TeamPlayersViewModel(
+                    teamId,
+                    get(
+                        named(FlowKey.TEAMS)
+                    ),
+                    get()
+                )
+            }
+            viewModel { TeamsViewModel(get(), get(named(FlowKey.TEAMS))) }
+        }
+    }
+
     private fun createNavigation(): Module = module {
         val cicerone = Cicerone.create()
-
-        Cicerone.create()
-
-
         factory {
             cicerone.router
         }
@@ -57,8 +75,6 @@ class NhlApplication : Application() {
         factory {
             cicerone.navigatorHolder
         }
-
-
     }
 
     private fun createTeamsModule(): Module = module {
@@ -68,8 +84,6 @@ class NhlApplication : Application() {
                 get()
             )
         }
-//        viewModel { (teamId: Int) -> TeamDetailViewModel(get(), teamId, get()) }
-        viewModel { (teamId: Int) -> TeamPlayersViewModel(teamId, get()) }
     }
 
 

@@ -35,7 +35,7 @@ android {
 }
 
 ext.compose_version = '0.1.0-dev05'
-ext.koin_version = '2.0.1'
+ext.koin_version = '2.1.5'
 
 dependencies {
 

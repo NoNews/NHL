@@ -4,25 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
-interface BackPressable {
-    fun onBackPressed()
-}
+//fun AppCompatActivity.handleBackPress(): Boolean {
+//    return tryToHandleBackPress(supportFragmentManager)
+//}
+//
+//fun Fragment.handleBackPress(): Boolean = tryToHandleBackPress(childFragmentManager)
 
-
-fun AppCompatActivity.handleBackPress(): Boolean {
-    return tryToHandleBackPress(supportFragmentManager)
-}
-
-fun Fragment.handleBackPress(): Boolean = tryToHandleBackPress(childFragmentManager)
-
-private fun tryToHandleBackPress(fragmentManager: FragmentManager): Boolean {
-    val currentFragment = fragmentManager.fragments.lastOrNull()
-    currentFragment.let { fragment ->
-        if (fragment is BackPressable) {
-            fragment.onBackPressed()
-            return true
-        }
-    }
-    return false
-}
+//private fun tryToHandleBackPress(fragmentManager: FragmentManager): Boolean {
+//    val currentFragment = fragmentManager.fragments.lastOrNull()
+//    currentFragment.let { fragment ->
+//        if (fragment is BackPressable) {
+//            fragment.onBackPressed()
+//            return true
+//        }
+//    }
+//    return false
+//}
 

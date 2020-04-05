@@ -18,13 +18,17 @@ abstract class BaseMviFragment<STATE : BaseScreenState, out VM : BaseViewModel<S
 ) : BaseFragment(layoutRes) {
 
     private var dialog: ProgressDialog? = null
+
     protected open val viewModel: VM by lazy {
+
         getViewModel(
             clazz = viewModelClass,
-            qualifier = null,
             parameters = getParameters()
         )
     }
+
+
+    open protected fun getFlowKey(): String? = null
 
 
     protected open fun getParameters(): ParametersDefinition? = {
@@ -34,9 +38,9 @@ abstract class BaseMviFragment<STATE : BaseScreenState, out VM : BaseViewModel<S
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.onActive()
-
-
+        if (savedInstanceState == null) {
+            viewModel.onActive()
+        }
         viewModel.observeState().observe(
             this,
             Observer(::stateUpdated)

@@ -41,4 +41,8 @@ class TeamDetailViewModel(
     fun onBackPressed() {
         router.exit()
     }
+
+    override fun onCleared() {
+        super.onCleared()
+    }
 }

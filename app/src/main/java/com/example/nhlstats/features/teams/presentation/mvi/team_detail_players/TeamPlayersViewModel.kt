@@ -10,9 +10,11 @@ import com.example.nhlstats.features.teams.domain.ShortTeamPlayers
 import com.example.nhlstats.features.teams.domain.TeamsRepository
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import ru.terrakok.cicerone.Router
 
 class TeamPlayersViewModel constructor(
     private val teamId: Int,
+    private val router: Router,
     private val repository: TeamsRepository
 ) : BaseViewModel<TeamPlayersState>() {
 
@@ -49,6 +51,11 @@ class TeamPlayersViewModel constructor(
         }
         updateState(state)
     }
+
+    fun onBackPressed() {
+        router.exit()
+    }
+
 
 }
 
