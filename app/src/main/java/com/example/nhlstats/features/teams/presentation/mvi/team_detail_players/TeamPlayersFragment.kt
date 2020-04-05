@@ -7,11 +7,14 @@ import com.example.core_ui.list.ui.delegateadapter.DelegatesAdapter
 import com.example.core_ui.list.ui.delegateadapter.DelegatesManager
 import com.example.core_ui.list.ui.delegates.ImageTitleSubtitleDelegate
 import com.example.core_ui.list.ui.delegates.TitleDelegate
+import com.example.core_ui.list.ui.setupNavigationButton
 import com.example.core_ui.list.ui.setupWithAdapter
 import com.example.nhlstats.R
 import com.example.nhlstats.common.presentation.BaseMviFragment
 import com.example.nhlstats.features.teams.presentation.mvi.team_detail.TeamDetailContract
+import kotlinx.android.synthetic.main.team_detail_fragment.*
 import kotlinx.android.synthetic.main.team_players_fragment.*
+import kotlinx.android.synthetic.main.team_players_fragment.toolbar
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.parameter.parametersOf
 
@@ -41,6 +44,11 @@ class TeamPlayersFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rv_players.setupWithAdapter(adapter)
+        toolbar.setupNavigationButton()
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+
     }
 
 

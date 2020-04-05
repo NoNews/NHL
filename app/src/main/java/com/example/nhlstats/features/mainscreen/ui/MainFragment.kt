@@ -17,17 +17,11 @@ class MainFragment : BaseFragment(R.layout.main_fragment),
     private lateinit var adapter: MainViewPagerAdapter
 
     private val router: Router by inject()
-//    private val currentTabFragment: BaseFragment?
-//        get() = childFragmentManager.fragments[view_pager.currentItem] as BaseFragment
 
     private val currentTabFragment: BaseFragment?
         get() = childFragmentManager.fragments.firstOrNull { it.isVisible } as? BaseFragment
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,17 +33,14 @@ class MainFragment : BaseFragment(R.layout.main_fragment),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
+            R.id.menu_standings -> {
+                view_pager.currentItem = 0
+            }
+
             R.id.menu_teams -> {
                 view_pager.currentItem = 1
             }
-
-//            R.id.menu_records -> {
-//                view_pager.currentItem = 0
-//            }
-//
-//            R.id.menu_standings -> {
-//                view_pager.currentItem = 2
-//            }
         }
         return true
     }

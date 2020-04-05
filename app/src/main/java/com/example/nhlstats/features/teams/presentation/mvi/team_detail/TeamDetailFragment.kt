@@ -3,6 +3,7 @@ package com.example.nhlstats.features.teams.presentation.mvi.team_detail
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import com.example.core_ui.list.ui.setupNavigationButton
 import com.example.nhlstats.R
 import com.example.nhlstats.common.presentation.BaseMviFragment
 import kotlinx.android.synthetic.main.team_detail_fragment.*
@@ -36,6 +37,11 @@ class TeamDetailFragment : BaseMviFragment<TeamDetailState, TeamDetailViewModel>
         tv_players.setOnClickListener {
             viewModel.onClickPlayers()
         }
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+        toolbar.setupNavigationButton()
     }
 
     override fun stateUpdated(state: TeamDetailState) {
@@ -47,3 +53,5 @@ class TeamDetailFragment : BaseMviFragment<TeamDetailState, TeamDetailViewModel>
     }
 
 }
+
+

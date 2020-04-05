@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<!--    <item-->
-<!--        android:id="@+id/menu_standings"-->
-<!--        android:enabled="true"-->
-<!--        android:title="Standings"-->
-<!--        />-->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_standings"
+        android:enabled="true"
+        android:title="Standings" />
     <item
         android:id="@+id/menu_teams"
         android:enabled="true"
         android:title="Teams"
         />
-<!--    <item-->
-<!--        android:id="@+id/menu_records"-->
-<!--        android:enabled="true"-->
-<!--        android:title="Records"-->
-<!--        />-->
 </menu>
