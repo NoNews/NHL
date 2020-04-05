@@ -8,6 +8,7 @@ import com.example.core_ui.R
 
 fun RecyclerView.setupWithAdapter(adapter: ListAdapter<*, *>) {
     isMotionEventSplittingEnabled = false
+    isVerticalScrollBarEnabled = true
     layoutManager = LinearLayoutManager(context)
     this.adapter = adapter
 }
