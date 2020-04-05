@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:icon="@drawable/ic_chart_areaspline"
         android:id="@+id/menu_standings"
         android:enabled="true"
-        android:title="Standings" />
+        android:title="@string/standings" />
     <item
+        android:icon="@drawable/ic_hockey_sticks"
         android:id="@+id/menu_teams"
         android:enabled="true"
-        android:title="Teams"
+        android:title="@string/teams"
         />
 </menu>
