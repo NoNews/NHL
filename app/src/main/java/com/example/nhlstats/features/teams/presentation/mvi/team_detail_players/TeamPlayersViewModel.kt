@@ -13,6 +13,7 @@ import com.example.nhlstats.R
 import com.example.nhlstats.common.data.response.*
 import com.example.nhlstats.common.presentation.BaseViewModel
 import com.example.nhlstats.common.ui.imageUrl
+import com.example.nhlstats.features.players.presentation.PlayerContract
 import com.example.nhlstats.features.teams.domain.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ class TeamPlayersViewModel constructor(
     private val teamId: Int,
     private val router: Router,
     private val repository: TeamsRepository
-) : BaseViewModel<TeamPlayersState>() {
+) : BaseViewModel<PlayerState>() {
 
     override fun onCreated() {
         viewModelScope.launch {
@@ -35,8 +36,8 @@ class TeamPlayersViewModel constructor(
 
     private fun setupPlayers(teamPlayers: Data<ShortTeamPlayers>) {
         val state = when {
-            teamPlayers.isLoading() -> TeamPlayersState.Loading
-            teamPlayers.isError() -> TeamPlayersState.Error(teamPlayers.error!!)
+            teamPlayers.isLoading() -> PlayerState.Loading
+            teamPlayers.isError() -> PlayerState.Error(teamPlayers.error!!)
             teamPlayers.contentLoaded() -> {
                 updateContent(teamPlayers)
             }
@@ -45,11 +46,11 @@ class TeamPlayersViewModel constructor(
         updateState(state)
     }
 
-    private fun updateContent(teamPlayers: Data<ShortTeamPlayers>): TeamPlayersState.Content {
+    private fun updateContent(teamPlayers: Data<ShortTeamPlayers>): PlayerState.Content {
         val content = teamPlayers.requireContent()
         val teamName = content.teamName
         val players = content.players.sortedBy { it.positionInfo.type }
-        return TeamPlayersState.Content(
+        return PlayerState.Content(
             title = teamName,
             content = getContent(players)
         )
@@ -57,8 +58,6 @@ class TeamPlayersViewModel constructor(
 
     private fun getContent(players: List<ShortPlayer>): List<ListItem> {
         val items = mutableListOf<ListItem>()
-
-
         var currentType: PositionType? = null
         players.forEach { shortPlayer ->
             val type = shortPlayer.positionInfo.type
@@ -76,7 +75,8 @@ class TeamPlayersViewModel constructor(
                 id = shortPlayer.id.toString(),
                 title = shortPlayer.fullName.asText(),
                 subtitle = getSubtitle(shortPlayer),
-                image = Image.Network(url = shortPlayer.imageUrl())
+                image = Image.Network(url = shortPlayer.imageUrl()),
+                payload = shortPlayer
             )
         }
         return items
@@ -119,6 +119,14 @@ class TeamPlayersViewModel constructor(
 
     fun onBackPressed() {
         router.exit()
+    }
+
+    fun onClickPlayer(item: ImageTitleSubtitleDelegate.Item) {
+        val player = item.payload
+        check(player is ShortPlayer) { "Wrong player detail" }
+
+        val screen = PlayerContract.createScreen(player.id)
+        router.navigateTo(screen)
     }
 
 

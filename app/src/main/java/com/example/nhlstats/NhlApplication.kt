@@ -2,6 +2,7 @@ package com.example.nhlstats
 
 import android.app.Application
 import com.example.nhlstats.common.data.NetworkClient
+import com.example.nhlstats.features.players.presentation.PlayerViewModel
 import com.example.nhlstats.features.standings.currentseasontable.CurrentSeasonViewModel
 import com.example.nhlstats.features.standings.teamstanding.TeamStandingViewModel
 import com.example.nhlstats.features.teams.data.TeamsRepositoryImpl
@@ -67,6 +68,7 @@ class NhlApplication : Application() {
             viewModel { TeamsViewModel(get(), get(named(FlowKey.TEAMS))) }
             viewModel { CurrentSeasonViewModel(get(named(FlowKey.STANDINGS))) }
             viewModel { TeamStandingViewModel(get(named(FlowKey.STANDINGS))) }
+            viewModel { (playerId: Int) -> PlayerViewModel(playerId, get(named(FlowKey.TEAMS))) }
         }
     }
 
