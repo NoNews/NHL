@@ -1,11 +1,15 @@
 package com.example.nhlstats.features.teams.presentation.mvi.team_detail_players
 
 import android.view.Gravity
+import androidx.annotation.StringRes
 import androidx.lifecycle.viewModelScope
 import com.example.core_ui.list.ui.delegateadapter.ListItem
 import com.example.core_ui.list.ui.delegates.ImageTitleSubtitleDelegate
 import com.example.core_ui.list.ui.delegates.TitleDelegate
 import com.example.core_ui.list.ui.images.Image
+import com.example.core_ui.list.ui.text.Text
+import com.example.core_ui.list.ui.text.asText
+import com.example.nhlstats.R
 import com.example.nhlstats.common.data.response.*
 import com.example.nhlstats.common.presentation.BaseViewModel
 import com.example.nhlstats.common.ui.imageUrl
@@ -61,16 +65,16 @@ class TeamPlayersViewModel constructor(
             if (currentType != type) {
                 currentType = type
 
-                val positionName = getPositionName(type)
+                val positionName = Text.Resource(getGroupName(type))
                 items += TitleDelegate.Item(
-                    id = positionName,
+                    id = positionName.resource.toString(),
                     title = positionName,
                     gravity = Gravity.START
                 )
             }
             items += ImageTitleSubtitleDelegate.Item(
                 id = shortPlayer.id.toString(),
-                title = shortPlayer.fullName,
+                title = shortPlayer.fullName.asText(),
                 subtitle = getSubtitle(shortPlayer),
                 image = Image.Network(url = shortPlayer.imageUrl())
             )
@@ -78,30 +82,39 @@ class TeamPlayersViewModel constructor(
         return items
     }
 
-    private fun getSubtitle(shortPlayer: ShortPlayer): String {
-
-        val builder = StringBuilder()
-        builder.append(" #")
-        builder.append(shortPlayer.jerseyNumber)
-
-        val positionInfo = shortPlayer.positionInfo
-        if (positionInfo is PositionInfo.Forward) {
-            builder.append(", ")
-            val forwardType = when (positionInfo.forwardType) {
-                ForwardType.RIGHT_WING -> "Right wing"
-                ForwardType.LEFT_WING -> "Left wing"
-                ForwardType.CENTER -> "Center"
-            }
-            builder.append(forwardType)
-        }
-        return builder.toString()
+    private fun getSubtitle(shortPlayer: ShortPlayer): Text {
+        return Text.Multi(
+            listOfNotNull(
+                "#".asText(),
+                shortPlayer.jerseyNumber?.asText(),
+                " ".asText(),
+                getForwardTypeText(shortPlayer.positionInfo)
+            )
+        )
     }
 
+    private fun getForwardTypeText(positionInfo: PositionInfo): Text? =
+        if (positionInfo is PositionInfo.Forward) {
+            Text.Resource(getForwardType(positionInfo.forwardType))
+        } else {
+            null
+        }
 
-    private fun getPositionName(type: PositionType) = when (type) {
-        PositionType.FORWARD -> "Forwards"
-        PositionType.DEFENSEMAN -> "Defensemen"
-        PositionType.GOALIE -> "Goalies"
+
+    @StringRes
+    fun getForwardType(type: ForwardType) =
+        when (type) {
+            ForwardType.RIGHT_WING -> R.string.forward_right_wing
+            ForwardType.LEFT_WING -> R.string.forward_left_wing
+            ForwardType.CENTER -> R.string.forward_center
+        }
+
+
+    @StringRes
+    private fun getGroupName(type: PositionType) = when (type) {
+        PositionType.FORWARD -> R.string.group_forwards
+        PositionType.DEFENSEMAN -> R.string.group_defencemen
+        PositionType.GOALIE -> R.string.group_goalies
     }
 
     fun onBackPressed() {

@@ -7,6 +7,8 @@ import com.example.core_ui.R
 import com.example.core_ui.list.ui.delegateadapter.BaseItemDelegate
 import com.example.core_ui.list.ui.delegateadapter.BaseViewHolder
 import com.example.core_ui.list.ui.delegateadapter.ListItem
+import com.example.core_ui.list.ui.text.Text
+import com.example.core_ui.list.ui.text.set
 
 class TitleDelegate() : BaseItemDelegate<TitleDelegate.Item, TitleDelegate.ViewHolder>() {
 
@@ -25,17 +27,15 @@ class TitleDelegate() : BaseItemDelegate<TitleDelegate.Item, TitleDelegate.ViewH
 
     class ViewHolder(view: View) : BaseViewHolder(view) {
         private val title = view.findViewById<TextView>(R.id.tv_title)
-
         fun bind(item: Item) {
-            title.text = item.title
+            title.set(item.title)
             title.gravity = item.gravity
         }
-
     }
 
     data class Item(
         override val id: String = "",
-        val title: String,
+        val title: Text,
         var gravity: Int = Gravity.START
     ) : ListItem
 

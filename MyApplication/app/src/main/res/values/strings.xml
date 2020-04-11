@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="forwards">Forwards</string>
+    <string name="forward_right_wing">Right wing</string>
+    <string name="forwards_left_wing">Left wing</string>
+    <string name="forward_center">Center</string>
+    <string name="group_forwards">Forwards</string>
+    <string name="group_goalies">Goalies</string>
+    <string name="group_defencemen">Defencemen</string>
 </resources>

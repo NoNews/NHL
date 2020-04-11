@@ -3,6 +3,7 @@ package com.example.nhlstats.features.teams.presentation.mvi.list
 import androidx.lifecycle.viewModelScope
 import com.example.core_ui.list.ui.delegates.ImageTitleSubtitleDelegate
 import com.example.core_ui.list.ui.images.Image
+import com.example.core_ui.list.ui.text.asText
 import com.example.nhlstats.common.data.response.Data
 import com.example.nhlstats.common.presentation.BaseViewModel
 import com.example.nhlstats.common.ui.toImageRes
@@ -41,8 +42,8 @@ class TeamsViewModel(
                 val items = content.map { team ->
                     ImageTitleSubtitleDelegate.Item(
                         id = team.id.toString(),
-                        title = team.name,
-                        subtitle = team.fistYearOfPlay,
+                        title = team.name.asText(),
+                        subtitle = team.fistYearOfPlay.asText(),
                         image = Image.Resource(team.toImageRes()),
                         payload = team.id
                     )

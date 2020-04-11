@@ -1,5 +1,12 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">NHL stats</string>
     <string name="standings">Standings</string>
     <string name="teams">Teams</string>
+    <string name="forward_right_wing" tools:ignore="ExtraTranslation">Right wing</string>
+    <string name="forward_left_wing" tools:ignore="ExtraTranslation">Left wing</string>
+    <string name="forward_center" tools:ignore="ExtraTranslation">Center</string>
+    <string name="group_forwards" tools:ignore="ExtraTranslation">Forwards</string>
+    <string name="group_goalies" tools:ignore="ExtraTranslation">Goalies</string>
+    <string name="group_defencemen" tools:ignore="ExtraTranslation">Defencemen</string>
+
 </resources>

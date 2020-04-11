@@ -10,6 +10,8 @@ import com.example.core_ui.list.ui.delegateadapter.BaseViewHolder
 import com.example.core_ui.list.ui.delegateadapter.ListItem
 import com.example.core_ui.list.ui.images.Image
 import com.example.core_ui.list.ui.images.loadTo
+import com.example.core_ui.list.ui.text.Text
+import com.example.core_ui.list.ui.text.provideText
 
 class ImageTitleSubtitleDelegate(private val onClick: ((Item) -> Unit)? = null) :
     BaseItemDelegate<ImageTitleSubtitleDelegate.Item, ImageTitleSubtitleDelegate.ViewHolder>() {
@@ -37,11 +39,15 @@ class ImageTitleSubtitleDelegate(private val onClick: ((Item) -> Unit)? = null) 
 
 
         fun bindItem(item: Item, onClick: ((Item) -> Unit)?) {
-            tvTitle.text = item.title
-            if (item.subtitle.isEmpty()) {
+            val context = itemView.context
+            val titleText = context.provideText(item.title)
+            val subtitleText = context.provideText(item.subtitle)
+
+            tvTitle.text = titleText
+            if (subtitleText.isEmpty()) {
                 tvSubtitle.visibility = View.GONE
             } else {
-                tvSubtitle.text = item.subtitle
+                tvSubtitle.text = subtitleText
                 tvSubtitle.visibility = View.VISIBLE
             }
             item.image.loadTo(image)
@@ -56,8 +62,8 @@ class ImageTitleSubtitleDelegate(private val onClick: ((Item) -> Unit)? = null) 
 
     data class Item(
         override val id: String,
-        val title: String = "",
-        val subtitle: String = "",
+        val title: Text,
+        val subtitle: Text = Text.Simple(""),
         val image: Image = Image.Empty,
         val payload: Any? = null
     ) : ListItem
